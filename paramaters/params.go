@@ -1,9 +1,9 @@
-package studentvue
+package paramaters
 
 import "strconv"
 
 const (
-	Gradebook = "Gradebook"
+	GradeBook = "Gradebook"
 )
 
 const (
