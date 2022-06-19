@@ -54,7 +54,7 @@ func New(url string, identifier int, password string) Client {
 	return Client{client, url, Identifier(identifier), password}
 }
 
-func (c *Client) request(handle *Handle, method *paramaters.Method, head *Header, paramaters *paramaters.Paramater) (*string, error) {
+func (c *Client) request(handle Handle, method paramaters.Method, head *Header, paramaters *paramaters.Paramater) (*string, error) {
 	request := c.client.Request()
 	head.ApplyHeader(request)
 	rbody := map[string]string{
@@ -62,8 +62,8 @@ func (c *Client) request(handle *Handle, method *paramaters.Method, head *Header
 		"password":             c.password,
 		"skipLoginLog":         "true",
 		"parent":               "false",
-		"webServiceHandleName": string(*handle),
-		"methodName":           string(*method),
+		"webServiceHandleName": string(handle),
+		"methodName":           string(method),
 		"paramStr":             string(*paramaters),
 	}
 	request.Use(body.JSON(rbody))

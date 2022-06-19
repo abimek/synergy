@@ -18,6 +18,10 @@ type ParamaterBuilder struct {
 	paramaters string
 }
 
+func NewParamaterBuilder() ParamaterBuilder {
+	return ParamaterBuilder{""}
+}
+
 func (p *ParamaterBuilder) AddParamater(paramater ParamaterType) {
 	p.paramaters += paramater.ToString() + "\n"
 }

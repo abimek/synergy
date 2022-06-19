@@ -7,12 +7,21 @@ type GradeBook struct {
 	data string
 }
 
-func NewGradeBook(client *Client, period *paramaters.ReportPeriod) (GradeBook, error) {
+func NewGradeBook(client *Client, period *paramaters.ReportPeriod) (*GradeBook, error) {
+	var paramater paramaters.Paramater
+	builder := paramaters.NewParamaterBuilder()
 	if period.Period == paramaters.ReportPeriodNone {
-		// TODO: Send Request
-		return _, nil
+		paramater = builder.Build()
+	} else {
+		builder.AddParamater(period)
+		paramater = builder.Build()
 	}
+	header := DefaultHeader()
+	data, ok := client.request(PXPWebServices, paramaters.GradeBook, &header, &paramater)
 
-	// TODO: Send request with the specific period
-	return _, nil
+	if ok != nil {
+		return nil, ok
+	}
+	gradebook := GradeBook{*data}
+	return &gradebook, nil
 }
