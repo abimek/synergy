@@ -2,8 +2,12 @@ package paramaters
 
 import "strconv"
 
+type Method string
+
+type Paramater string
+
 const (
-	GradeBook = "Gradebook"
+	GradeBook Method = "Gradebook"
 )
 
 const (
@@ -18,8 +22,8 @@ func (p *ParamaterBuilder) AddParamater(paramater ParamaterType) {
 	p.paramaters += paramater.ToString() + "\n"
 }
 
-func (p *ParamaterBuilder) String() string {
-	return p.paramaters
+func (p *ParamaterBuilder) Build() Paramater {
+	return Paramater(p.paramaters)
 }
 
 // I decided to make my own interface instead of using the built in Stringer interface as it would be helpful

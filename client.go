@@ -1,12 +1,19 @@
 package studentvue
 
 import (
+	"strconv"
+
+	"studentvue/paramaters"
+
 	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2/plugins/body"
 )
 
+type Handle string
+
 const (
-	PXPWebServices = "PXPWebServices"
-	HDInfoServices = "HDInfoServices"
+	PXPWebServices Handle = "PXPWebServices"
+	HDInfoServices Handle = "HDInfoServices"
 )
 
 const Endpoint = "/Service/PXPCommunication.asmx/ProcessWebServiceRequest"
@@ -47,9 +54,28 @@ func New(url string, identifier int, password string) Client {
 	return Client{client, url, Identifier(identifier), password}
 }
 
-func (c *Client) request(head Header) {
+func (c *Client) request(handle *Handle, method *paramaters.Method, head *Header, paramaters *paramaters.Paramater) (*string, error) {
 	request := c.client.Request()
 	head.ApplyHeader(request)
+	rbody := map[string]string{
+		"userID":               strconv.Itoa(int(c.identifer)),
+		"password":             c.password,
+		"skipLoginLog":         "true",
+		"parent":               "false",
+		"webServiceHandleName": string(*handle),
+		"methodName":           string(*method),
+		"paramStr":             string(*paramaters),
+	}
+	request.Use(body.JSON(rbody))
+
+	resp, ok := request.Send()
+
+	if ok != nil {
+		return nil, ok
+	}
+
+	stringVal := resp.String()
+	return &stringVal, nil
 }
 
 func defaultHeaders(r *gentleman.Request) {
