@@ -22,12 +22,12 @@ func NewParamaterBuilder() ParamaterBuilder {
 	return ParamaterBuilder{""}
 }
 
-func (p *ParamaterBuilder) AddParamater(paramater ParamaterType) {
+func (p *ParamaterBuilder) Add(paramater ParamaterType) {
 	p.paramaters += paramater.ToString() + "\n"
 }
 
 func (p *ParamaterBuilder) Build() Paramater {
-	return Paramater(p.paramaters)
+	return Paramater("<Params>\n" + p.paramaters + "</Params>")
 }
 
 // I decided to make my own interface instead of using the built in Stringer interface as it would be helpful
