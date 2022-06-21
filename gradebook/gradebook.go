@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"studentvue"
-	"studentvue/paramaters"
 )
 
 type GradeBook struct {
@@ -91,17 +90,17 @@ type book struct {
 	Xmlns   string   `xml:"xmlns,attr"`
 }
 
-func NewGradeBook(client *studentvue.Client, period *paramaters.ReportPeriod) (*GradeBook, error) {
-	var paramater paramaters.Paramater
-	builder := paramaters.NewParamaterBuilder()
-	if period.Period == paramaters.ReportPeriodNone {
+func NewGradeBook(client *studentvue.Client, period *studentvue.ReportPeriod) (*GradeBook, error) {
+	var paramater studentvue.Paramater
+	builder := studentvue.NewParamaterBuilder()
+	if period.Period == studentvue.ReportPeriodNone {
 		paramater = builder.Build()
 	} else {
 		builder.Add(period)
 		paramater = builder.Build()
 	}
 	header := studentvue.DefaultHeader()
-	data, ok := client.Request(studentvue.PXPWebServices, paramaters.GradeBook, &header, &paramater)
+	data, ok := client.Request(studentvue.PXPWebServices, studentvue.GradeBook, &header, &paramater)
 
 	if ok != nil {
 		return nil, ok

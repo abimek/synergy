@@ -6,8 +6,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-
-	"studentvue/paramaters"
 )
 
 type Handle string
@@ -54,7 +52,7 @@ func New(url string, identifier int, password string) Client {
 	return Client{client, url, Identifier(identifier), password}
 }
 
-func (c *Client) Request(handle Handle, method paramaters.Method, head *Header, paramaters *paramaters.Paramater) (*string, error) {
+func (c *Client) Request(handle Handle, method Method, head *Header, paramaters *Paramater) (*string, error) {
 	data := url.Values{}
 	data.Set("userID", strconv.Itoa(int(c.identifer)))
 	data.Set("password", c.password)

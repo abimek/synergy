@@ -1,4 +1,4 @@
-package paramaters
+package studentvue
 
 import "strconv"
 
