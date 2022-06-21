@@ -57,8 +57,8 @@ type GradeBook struct {
 							Date               studentvue.Time `xml:"Date,attr"`
 							DueDate            studentvue.Time `xml:"DueDate,attr"`
 							Score              Score           `xml:"Score,attr"`
-							ScoreType          string          `xml:"ScoreType,attr"`
-							Points             string          `xml:"Points,attr"`
+							ScoreType          GradeType       `xml:"ScoreType,attr"`
+							Points             Points          `xml:"Points,attr"`
 							Notes              string          `xml:"Notes,attr"`
 							TeacherID          int             `xml:"TeacherID,attr"`
 							StudentID          int             `xml:"StudentID,attr"`
@@ -76,20 +76,14 @@ type GradeBook struct {
 	} `xml:"Courses"`
 }
 
-type GradeType string
-
-const (
-	Normal          GradeType = "normal"
-	NotGraded       GradeType = "not graded"
-	CharachterGrade GradeType = "charachter grade"
-)
-
 type book struct {
 	XMLName xml.Name `xml:"Book"`
 	Text    string   `xml:",chardata"`
 	Xmlns   string   `xml:"xmlns,attr"`
 }
 
+// NewGradeBook will either return a GradeBook or an error
+//
 func NewGradeBook(client *studentvue.Client, period *studentvue.ReportPeriod) (*GradeBook, error) {
 	var paramater studentvue.Paramater
 	builder := studentvue.NewParamaterBuilder()
