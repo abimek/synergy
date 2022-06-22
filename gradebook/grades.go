@@ -124,12 +124,3 @@ func (f *Points) UnmarshalText(text []byte) error {
 	f.Total = p
 	return nil
 }
-
-func (f GradeType) MarshalText() ([]byte, error) {
-	return []byte(f), nil
-}
-
-func (f *GradeType) UnmarshalText(text []byte) error {
-	*f = GradeType(string(text))
-	return nil
-}

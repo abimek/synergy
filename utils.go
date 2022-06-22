@@ -1,6 +1,10 @@
 package studentvue
 
-import "time"
+import (
+	"encoding/xml"
+	"strings"
+	"time"
+)
 
 /// This is the time format used by StudentVue
 const fixedFormat = "1/2/2006"
@@ -21,4 +25,21 @@ func (t *Time) UnmarshalText(text []byte) error {
 		t.Time = ti
 	}
 	return err
+}
+
+type xmlIntermediary struct {
+	XMLName xml.Name `xml:"StudentVueApi"`
+	Text    string   `xml:",chardata"`
+}
+
+func GetXmlString(text string) (*string, error) {
+	sxml := strings.Replace(text, "string", "StudentVueApi", 2)
+
+	x := xmlIntermediary{}
+	err := xml.Unmarshal([]byte(sxml), &x)
+	if err != nil {
+		return nil, err
+	}
+
+	return &x.Text, nil
 }

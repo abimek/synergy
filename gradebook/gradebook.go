@@ -2,8 +2,6 @@ package gradebook
 
 import (
 	"encoding/xml"
-	"fmt"
-	"strings"
 
 	"studentvue"
 )
@@ -57,7 +55,7 @@ type GradeBook struct {
 							Date               studentvue.Time `xml:"Date,attr"`
 							DueDate            studentvue.Time `xml:"DueDate,attr"`
 							Score              Score           `xml:"Score,attr"`
-							ScoreType          GradeType       `xml:"ScoreType,attr"`
+							ScoreType          string          `xml:"ScoreType,attr"`
 							Points             Points          `xml:"Points,attr"`
 							Notes              string          `xml:"Notes,attr"`
 							TeacherID          int             `xml:"TeacherID,attr"`
@@ -76,44 +74,25 @@ type GradeBook struct {
 	} `xml:"Courses"`
 }
 
-type book struct {
-	XMLName xml.Name `xml:"Book"`
-	Text    string   `xml:",chardata"`
-	Xmlns   string   `xml:"xmlns,attr"`
-}
-
 // NewGradeBook will either return a GradeBook or an error
 //
-func NewGradeBook(client *studentvue.Client, period *studentvue.ReportPeriod) (*GradeBook, error) {
-	var paramater studentvue.Paramater
-	builder := studentvue.NewParamaterBuilder()
-	if period.Period == studentvue.ReportPeriodNone {
-		paramater = builder.Build()
-	} else {
-		builder.Add(period)
-		paramater = builder.Build()
-	}
+func New(client *studentvue.Client, builder *studentvue.ParamaterBuilder) (*GradeBook, error) {
+	paramater := builder.Build()
 	header := studentvue.DefaultHeader()
-	data, ok := client.Request(studentvue.PXPWebServices, studentvue.GradeBook, &header, &paramater)
-
-	if ok != nil {
-		return nil, ok
+	data, err := client.Request(studentvue.PXPWebServices, studentvue.GradeBook, &header, &paramater)
+	if err != nil {
+		return nil, err
 	}
 
-	sxml := strings.Replace(*data, "string", "Book", 2)
-
-	b := book{}
-	err := xml.Unmarshal([]byte(sxml), &b)
+	text, err := studentvue.GetXmlString(*data)
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 
 	gb := GradeBook{}
-	err = xml.Unmarshal([]byte(b.Text), &gb)
+	err = xml.Unmarshal([]byte(*text), &gb)
 
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 

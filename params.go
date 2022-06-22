@@ -7,7 +7,8 @@ type Method string
 type Paramater string
 
 const (
-	GradeBook Method = "Gradebook"
+	GradeBook               Method = "Gradebook"
+	GetMatchingDistrictList Method = "GetMatchingDistrictList"
 )
 
 const (
@@ -38,6 +39,7 @@ type ParamaterType interface {
 	ToString() string
 }
 
+// GradeBook Method: Report Periods species which period to get grades from when using the GradeBook Method
 type ReportPeriod struct {
 	Period int
 }
