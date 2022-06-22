@@ -7,17 +7,14 @@ import (
 )
 
 type GradeBook struct {
-	XMLName                    xml.Name `xml:"Gradebook"`
-	Xsd                        string   `xml:"xsd,attr"`
-	Xsi                        string   `xml:"xsi,attr"`
-	Type                       string   `xml:"Type,attr"`
-	ErrorMessage               string   `xml:"ErrorMessage,attr"`
-	HideStandardGraphInd       bool     `xml:"HideStandardGraphInd,attr"`
-	HideMarksColumnElementary  bool     `xml:"HideMarksColumnElementary,attr"`
-	HidePointsColumnElementary bool     `xml:"HidePointsColumnElementary,attr"`
-	HidePercentSecondary       bool     `xml:"HidePercentSecondary,attr"`
-	DisplayStandardsData       bool     `xml:"DisplayStandardsData,attr"`
-	GBStandardsTabDefault      bool     `xml:"GBStandardsTabDefault,attr"`
+	Type                       string `xml:"Type,attr"`
+	ErrorMessage               string `xml:"ErrorMessage,attr"`
+	HideStandardGraphInd       bool   `xml:"HideStandardGraphInd,attr"`
+	HideMarksColumnElementary  bool   `xml:"HideMarksColumnElementary,attr"`
+	HidePointsColumnElementary bool   `xml:"HidePointsColumnElementary,attr"`
+	HidePercentSecondary       bool   `xml:"HidePercentSecondary,attr"`
+	DisplayStandardsData       bool   `xml:"DisplayStandardsData,attr"`
+	GBStandardsTabDefault      bool   `xml:"GBStandardsTabDefault,attr"`
 	ReportingPeriods           struct {
 		ReportPeriod []struct {
 			GradePeriod string          `xml:"GradePeriod,attr"`
