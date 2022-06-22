@@ -9,6 +9,7 @@ type Paramater string
 const (
 	GradeBook               Method = "Gradebook"
 	GetMatchingDistrictList Method = "GetMatchingDistrictList"
+	Attendance              Method = "Attendance"
 )
 
 const (
@@ -46,4 +47,13 @@ type ReportPeriod struct {
 
 func (p *ReportPeriod) ToString() string {
 	return "<ReportPeriod>" + strconv.Itoa(p.Period) + "</ReportPeriod>"
+}
+
+// GetMatchingDistrictList Method: Specifies a specific zip code to return all the schools in it
+type MatchToDistrictZipCode struct {
+	ZipCode int
+}
+
+func (p *MatchToDistrictZipCode) ToString() string {
+	return "<MatchToDistrictZipCode>" + strconv.Itoa(p.ZipCode) + "</MatchToDistrictZipCode>"
 }
