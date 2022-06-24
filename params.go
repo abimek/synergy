@@ -7,9 +7,14 @@ type Method string
 type Paramater string
 
 const (
-	GradeBook               Method = "Gradebook"
-	GetMatchingDistrictList Method = "GetMatchingDistrictList"
-	Attendance              Method = "Attendance"
+	GradeBook                 Method = "Gradebook"
+	GetMatchingDistrictList   Method = "GetMatchingDistrictList"
+	Attendance                Method = "Attendance"
+	StudentCalendar           Method = "StudentCalendar"
+	StudentInfo               Method = "StudentInfo"
+	StudentSchoolInfo         Method = "StudentSchoolInfo"
+	GetReportCardInitialData  Method = "GetReportCardInitialData"
+	GetReportCardDocumentData Method = "GetReportCardDocumentData"
 )
 
 const (
@@ -18,6 +23,11 @@ const (
 
 type ParamaterBuilder struct {
 	paramaters string
+}
+
+func GetEmptyParamater() Paramater {
+	pb := NewParamaterBuilder()
+	return pb.Build()
 }
 
 func NewParamaterBuilder() ParamaterBuilder {
@@ -55,5 +65,5 @@ type MatchToDistrictZipCode struct {
 }
 
 func (p *MatchToDistrictZipCode) ToString() string {
-	return "<MatchToDistrictZipCode>" + strconv.Itoa(p.ZipCode) + "</MatchToDistrictZipCode>"
+	return "<Key>5E4B7859-B805-474B-A833-FDB15D205D40</Key>\n<MatchToDistrictZipCode>" + strconv.Itoa(p.ZipCode) + "</MatchToDistrictZipCode>"
 }

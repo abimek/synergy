@@ -10,12 +10,17 @@ import (
 
 type Handle string
 
+type Endpoint string
+
 const (
 	PXPWebServices Handle = "PXPWebServices"
 	HDInfoServices Handle = "HDInfoServices"
 )
 
-const Endpoint = "/Service/PXPCommunication.asmx/ProcessWebServiceRequest"
+const (
+	PXPEndpoint Endpoint = "/Service/PXPCommunication.asmx/ProcessWebServiceRequest"
+	HDEndpoint  Endpoint = "/Service/HDInfoCommunication.asmx/ProcessWebServiceRequest"
+)
 
 type Header map[string]string
 
@@ -37,31 +42,28 @@ func (h *Header) ApplyHeader(r *http.Request) {
 	}
 }
 
-type Identifier int
-
 type Client struct {
 	client    *http.Client
 	url       string
-	identifer Identifier
+	identifer int
 	password  string
 }
 
 func New(url string, identifier int, password string) Client {
-	url = url + Endpoint
 	client := &http.Client{}
-	return Client{client, url, Identifier(identifier), password}
+	return Client{client, url, identifier, password}
 }
 
-func (c *Client) Request(handle Handle, method Method, head *Header, paramaters *Paramater) (*string, error) {
+func (c *Client) Request(endpoint Endpoint, handle Handle, method Method, head *Header, paramaters *Paramater) (*string, error) {
 	data := url.Values{}
-	data.Set("userID", strconv.Itoa(int(c.identifer)))
+	data.Set("userID", strconv.Itoa(c.identifer))
 	data.Set("password", c.password)
 	data.Set("skipLoginLog", "true")
 	data.Set("parent", "false")
 	data.Set("webServiceHandleName", string(handle))
 	data.Set("methodName", string(method))
 	data.Set("paramStr", string(*paramaters))
-	req, _ := http.NewRequest("POST", c.url, strings.NewReader(data.Encode()))
+	req, _ := http.NewRequest("POST", c.url+string(endpoint), strings.NewReader(data.Encode()))
 	head.ApplyHeader(req)
 	res, ok := c.client.Do(req)
 	if ok != nil {

@@ -28,8 +28,7 @@ func (t *Time) UnmarshalText(text []byte) error {
 }
 
 type xmlIntermediary struct {
-	XMLName xml.Name `xml:"StudentVueApi"`
-	Text    string   `xml:",chardata"`
+	Text string `xml:",chardata"`
 }
 
 func GetXmlString(text string) (*string, error) {
