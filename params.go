@@ -67,3 +67,12 @@ type MatchToDistrictZipCode struct {
 func (p *MatchToDistrictZipCode) ToString() string {
 	return "<Key>5E4B7859-B805-474B-A833-FDB15D205D40</Key>\n<MatchToDistrictZipCode>" + strconv.Itoa(p.ZipCode) + "</MatchToDistrictZipCode>"
 }
+
+// Used in the ReportCard DocumentData Method to request a specific document
+type DocumentGU struct {
+	DocumentGU string
+}
+
+func (p *DocumentGU) ToString() string {
+	return "<DocumentGU>" + p.DocumentGU + "</DocumentGU>"
+}
