@@ -3,7 +3,7 @@ package studentinfo
 import (
 	"encoding/xml"
 
-	"github.com/abimekuriya/studentvue"
+	studentvue "github.com/abimekuriya/synergy"
 )
 
 type StudentInfo struct {

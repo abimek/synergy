@@ -3,7 +3,7 @@ package attendance
 import (
 	"encoding/xml"
 
-	"github.com/abimekuriya/studentvue"
+	studentvue "github.com/abimekuriya/synergy"
 )
 
 type Attendance struct {

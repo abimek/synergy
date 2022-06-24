@@ -3,7 +3,7 @@ package districts
 import (
 	"fmt"
 
-	"github.com/abimekuriya/studentvue"
+	studentvue "github.com/abimekuriya/synergy"
 )
 
 // TODO: change return from string to Districts

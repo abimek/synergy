@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"errors"
 
-	"github.com/abimekuriya/studentvue"
+	studentvue "github.com/abimekuriya/synergy"
 )
 
 type ReportingPeriods struct {
