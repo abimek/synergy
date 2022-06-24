@@ -48,7 +48,7 @@ type Client struct {
 	url       string
 	Identifer int
 	password  string
-	name      string
+	Name      string
 }
 
 func New(url string, identifier int, password string) Client {
