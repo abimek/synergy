@@ -2,7 +2,7 @@ package reportcard
 
 import (
 	"encoding/xml"
-	"fmt"
+	"errors"
 
 	"studentvue"
 )
@@ -17,6 +17,15 @@ type ReportingPeriod struct {
 	EndDate             string `xml:"EndDate,attr"`
 	Message             string `xml:"Message,attr"`
 	DocumentGU          string `xml:"DocumentGU,attr"`
+}
+
+// I don't currently know how to decode the Base64Code into a PDF
+type ReportCard struct {
+	DocumentGU  string `xml:"DocumentGU,attr"`
+	FileName    string `xml:"FileName,attr"`
+	DocFileName string `xml:"DocFileName,attr"`
+	DocType     string `xml:"DocType,attr"`
+	Base64Code  string `xml:"Base64Code"`
 }
 
 // Returns a ReportingPeriods struct which contains all the reporting periods
@@ -40,9 +49,16 @@ func NewList(client *studentvue.Client) (*ReportingPeriods, error) {
 	return &rp, nil
 }
 
-func New(client *studentvue.Client, paramater *studentvue.Paramater) (*string, error) {
+func (p *ReportingPeriod) GetReportCard(client *studentvue.Client) (*ReportCard, error) {
+	if p.DocumentGU == "" {
+		return nil, errors.New("DocumentGU is null")
+	}
+	builder := studentvue.NewParamaterBuilder()
+	builder.Add(&studentvue.DocumentGU{DocumentGU: p.DocumentGU})
+
+	param := builder.Build()
 	header := studentvue.DefaultHeader()
-	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.GetReportCardDocumentData, &header, paramater)
+	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.GetReportCardDocumentData, &header, &param)
 	if err != nil {
 		return nil, err
 	}
@@ -50,6 +66,10 @@ func New(client *studentvue.Client, paramater *studentvue.Paramater) (*string, e
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(*text)
-	return nil, nil
+	rc := ReportCard{}
+	err = xml.Unmarshal([]byte(*text), &rc)
+	if err != nil {
+		return nil, err
+	}
+	return &rc, nil
 }
