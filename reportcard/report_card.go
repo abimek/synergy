@@ -29,7 +29,7 @@ type ReportCard struct {
 }
 
 // Returns a ReportingPeriods struct which contains all the reporting periods
-func NewList(client *studentvue.Client) (*ReportingPeriods, error) {
+func New(client *studentvue.Client) (*ReportingPeriods, error) {
 	params := studentvue.GetEmptyParamater()
 	header := studentvue.DefaultHeader()
 
