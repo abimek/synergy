@@ -15,6 +15,7 @@ type Endpoint string
 const (
 	PXPWebServices Handle = "PXPWebServices"
 	HDInfoServices Handle = "HDInfoServices"
+	TESTServices Handle = "TESTServices"
 )
 
 const (
