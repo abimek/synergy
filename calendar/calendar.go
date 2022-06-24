@@ -3,7 +3,7 @@ package calendar
 import (
 	"encoding/xml"
 
-	"studentvue"
+	"github.com/abimekuriya/studentvue"
 )
 
 type CalendarListing struct {

@@ -3,7 +3,7 @@ package gradebook
 import (
 	"encoding/xml"
 
-	"studentvue"
+	"github.com/abimekuriya/studentvue"
 )
 
 type GradeBook struct {
