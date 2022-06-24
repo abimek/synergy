@@ -15,6 +15,7 @@ type Endpoint string
 const (
 	PXPWebServices Handle = "PXPWebServices"
 	HDInfoServices Handle = "HDInfoServices"
+	TESTServices Handle = "TESTServices"
 )
 
 const (
@@ -45,8 +46,9 @@ func (h *Header) ApplyHeader(r *http.Request) {
 type Client struct {
 	client    *http.Client
 	url       string
-	identifer int
+	Identifer int
 	password  string
+	name      string
 }
 
 func New(url string, identifier int, password string) Client {
