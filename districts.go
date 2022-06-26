@@ -5,7 +5,8 @@ import (
 )
 
 // TODO: change return from string to Districts
-func (client *Client) District(builder *ParamaterBuilder) (*string, error) {
+// Method will remain private until it's functional
+func (client *Client) district(builder *ParamaterBuilder) (*string, error) {
 	params := builder.Build()
 	header := DefaultHeader()
 	data, err := client.Request(HDEndpoint, HDInfoServices, GetMatchingDistrictListMethod, &header, &params)
