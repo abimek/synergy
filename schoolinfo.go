@@ -1,9 +1,7 @@
-package schoolinfo
+package studentvue
 
 import (
 	"encoding/xml"
-
-	studentvue "github.com/abimekuriya/synergy"
 )
 
 type SchoolInfo struct {
@@ -31,17 +29,17 @@ type Staff struct {
 	StaffGU string `xml:"StaffGU,attr"`
 }
 
-func New(client *studentvue.Client) (*SchoolInfo, error) {
-	params := studentvue.GetEmptyParamater()
+func (client *Client) SchoolInfo() (*SchoolInfo, error) {
+	params := GetEmptyParamater()
 
-	header := studentvue.DefaultHeader()
+	header := DefaultHeader()
 
-	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.StudentSchoolInfo, &header, &params)
+	data, err := client.Request(PXPEndpoint, PXPWebServices, StudentSchoolInfoMethod, &header, &params)
 	if err != nil {
 		return nil, err
 	}
 
-	text, err := studentvue.GetXmlString(*data)
+	text, err := GetXmlString(*data)
 	if err != nil {
 		return nil, err
 	}

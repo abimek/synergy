@@ -1,9 +1,7 @@
-package studentinfo
+package studentvue
 
 import (
 	"encoding/xml"
-
-	studentvue "github.com/abimekuriya/synergy"
 )
 
 type StudentInfo struct {
@@ -20,7 +18,7 @@ type StudentInfo struct {
 	Address            string             `xml:"Address"`
 	LastNameGoesBy     string             `xml:"LastNameGoesBy"`
 	NickName           string             `xml:"NickName"`
-	BirthDate          studentvue.Time    `xml:"BirthDate"`
+	BirthDate          Time               `xml:"BirthDate"`
 	EMail              string             `xml:"EMail"`
 	Phone              string             `xml:"Phone"`
 	HomeLanguage       string             `xml:"HomeLanguage"`
@@ -76,16 +74,16 @@ type UserDefinedItem struct {
 	Value         string `xml:"Value,attr"`
 }
 
-func New(client *studentvue.Client) (*StudentInfo, error) {
-	params := studentvue.GetEmptyParamater()
+func (client *Client) StudentInfo() (*StudentInfo, error) {
+	params := GetEmptyParamater()
 
-	header := studentvue.DefaultHeader()
-	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.StudentInfo, &header, &params)
+	header := DefaultHeader()
+	data, err := client.Request(PXPEndpoint, PXPWebServices, StudentInfoMethod, &header, &params)
 	if err != nil {
 		return nil, err
 	}
 
-	text, err := studentvue.GetXmlString(*data)
+	text, err := GetXmlString(*data)
 	if err != nil {
 		return nil, err
 	}

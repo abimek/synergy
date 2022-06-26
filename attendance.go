@@ -1,9 +1,7 @@
-package attendance
+package studentvue
 
 import (
 	"encoding/xml"
-
-	studentvue "github.com/abimekuriya/synergy"
 )
 
 type Attendance struct {
@@ -23,13 +21,13 @@ type Attendance struct {
 
 // A signle instance / day which you were absence
 type Absence struct {
-	AbsenceDate           studentvue.Time `xml:"AbsenceDate,attr"`
-	Reason                string          `xml:"Reason,attr"`
-	Note                  string          `xml:"Note,attr"`
-	DailyIconName         string          `xml:"DailyIconName,attr"`
-	CodeAllDayReasonType  string          `xml:"CodeAllDayReasonType,attr"`
-	CodeAllDayDescription string          `xml:"CodeAllDayDescription,attr"`
-	Periods               []Period        `xml:"Periods>Period"`
+	AbsenceDate           Time     `xml:"AbsenceDate,attr"`
+	Reason                string   `xml:"Reason,attr"`
+	Note                  string   `xml:"Note,attr"`
+	DailyIconName         string   `xml:"DailyIconName,attr"`
+	CodeAllDayReasonType  string   `xml:"CodeAllDayReasonType,attr"`
+	CodeAllDayDescription string   `xml:"CodeAllDayDescription,attr"`
+	Periods               []Period `xml:"Periods>Period"`
 }
 
 // This type represents a signle Period in which you were absent
@@ -58,15 +56,15 @@ type PeriodTotal struct {
 	Total  byte `xml:"Total,attr"`
 }
 
-func New(client *studentvue.Client) (*Attendance, error) {
-	params := studentvue.GetEmptyParamater()
-	header := studentvue.DefaultHeader()
-	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.Attendance, &header, &params)
+func (client *Client) Attendance() (*Attendance, error) {
+	params := GetEmptyParamater()
+	header := DefaultHeader()
+	data, err := client.Request(PXPEndpoint, PXPWebServices, AttendanceMethod, &header, &params)
 	if err != nil {
 		return nil, err
 	}
 
-	text, err := studentvue.GetXmlString(*data)
+	text, err := GetXmlString(*data)
 	if err != nil {
 		return nil, err
 	}

@@ -7,14 +7,14 @@ type Method string
 type Paramater string
 
 const (
-	GradeBook                 Method = "Gradebook"
-	GetMatchingDistrictList   Method = "GetMatchingDistrictList"
-	Attendance                Method = "Attendance"
-	StudentCalendar           Method = "StudentCalendar"
-	StudentInfo               Method = "StudentInfo"
-	StudentSchoolInfo         Method = "StudentSchoolInfo"
-	GetReportCardInitialData  Method = "GetReportCardInitialData"
-	GetReportCardDocumentData Method = "GetReportCardDocumentData"
+	GradeBookMethod                 Method = "Gradebook"
+	GetMatchingDistrictListMethod   Method = "GetMatchingDistrictList"
+	AttendanceMethod                Method = "Attendance"
+	StudentCalendarMethod           Method = "StudentCalendar"
+	StudentInfoMethod               Method = "StudentInfo"
+	StudentSchoolInfoMethod         Method = "StudentSchoolInfo"
+	GetReportCardInitialDataMethod  Method = "GetReportCardInitialData"
+	GetReportCardDocumentDataMethod Method = "GetReportCardDocumentData"
 )
 
 const (
@@ -51,28 +51,28 @@ type ParamaterType interface {
 }
 
 // GradeBook Method: Report Periods species which period to get grades from when using the GradeBook Method
-type ReportPeriod struct {
+type ReportPeriodParamater struct {
 	Period int
 }
 
-func (p *ReportPeriod) ToString() string {
+func (p *ReportPeriodParamater) ToString() string {
 	return "<ReportPeriod>" + strconv.Itoa(p.Period) + "</ReportPeriod>"
 }
 
 // GetMatchingDistrictList Method: Specifies a specific zip code to return all the schools in it
-type MatchToDistrictZipCode struct {
+type MatchToDistrictZipCodeParamater struct {
 	ZipCode int
 }
 
-func (p *MatchToDistrictZipCode) ToString() string {
+func (p *MatchToDistrictZipCodeParamater) ToString() string {
 	return "<Key>5E4B7859-B805-474B-A833-FDB15D205D40</Key>\n<MatchToDistrictZipCode>" + strconv.Itoa(p.ZipCode) + "</MatchToDistrictZipCode>"
 }
 
 // Used in the ReportCard DocumentData Method to request a specific document
-type DocumentGU struct {
+type DocumentGUParmater struct {
 	DocumentGU string
 }
 
-func (p *DocumentGU) ToString() string {
+func (p *DocumentGUParmater) ToString() string {
 	return "<DocumentGU>" + p.DocumentGU + "</DocumentGU>"
 }

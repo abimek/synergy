@@ -1,10 +1,8 @@
-package reportcard
+package studentvue
 
 import (
 	"encoding/xml"
 	"errors"
-
-	studentvue "github.com/abimekuriya/synergy"
 )
 
 type ReportingPeriods struct {
@@ -29,15 +27,15 @@ type ReportCard struct {
 }
 
 // Returns a ReportingPeriods struct which contains all the reporting periods
-func New(client *studentvue.Client) (*ReportingPeriods, error) {
-	params := studentvue.GetEmptyParamater()
-	header := studentvue.DefaultHeader()
+func (client *Client) ReportCard() (*ReportingPeriods, error) {
+	params := GetEmptyParamater()
+	header := DefaultHeader()
 
-	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.GetReportCardInitialData, &header, &params)
+	data, err := client.Request(PXPEndpoint, PXPWebServices, GetReportCardInitialDataMethod, &header, &params)
 	if err != nil {
 		return nil, err
 	}
-	text, err := studentvue.GetXmlString(*data)
+	text, err := GetXmlString(*data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,20 +47,20 @@ func New(client *studentvue.Client) (*ReportingPeriods, error) {
 	return &rp, nil
 }
 
-func (p *ReportingPeriod) GetReportCard(client *studentvue.Client) (*ReportCard, error) {
+func (p *ReportingPeriod) GetReportCard(client *Client) (*ReportCard, error) {
 	if p.DocumentGU == "" {
 		return nil, errors.New("DocumentGU is null")
 	}
-	builder := studentvue.NewParamaterBuilder()
-	builder.Add(&studentvue.DocumentGU{DocumentGU: p.DocumentGU})
+	builder := NewParamaterBuilder()
+	builder.Add(&DocumentGUParmater{DocumentGU: p.DocumentGU})
 
 	param := builder.Build()
-	header := studentvue.DefaultHeader()
-	data, err := client.Request(studentvue.PXPEndpoint, studentvue.PXPWebServices, studentvue.GetReportCardDocumentData, &header, &param)
+	header := DefaultHeader()
+	data, err := client.Request(PXPEndpoint, PXPWebServices, GetReportCardDocumentDataMethod, &header, &param)
 	if err != nil {
 		return nil, err
 	}
-	text, err := studentvue.GetXmlString(*data)
+	text, err := GetXmlString(*data)
 	if err != nil {
 		return nil, err
 	}
