@@ -1,4 +1,4 @@
-package studentvue
+package synergy
 
 import (
 	"fmt"
