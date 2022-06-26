@@ -33,18 +33,19 @@ package main
 import (
 	"fmt"
 
-	studentvue "github.com/abimek/synergy"
+	 "github.com/abimek/synergy"
 )
 
 func main() {
-	client := studentvue.New("school portal", 0o000000, "password")
+	client := synergy.New("school portal", 0o000000, "password")
 
-	pb := studentvue.ParamaterBuilder{}
-	pb.Add(&studentvue.ReportPeriodParamater{Period: 0})
+	pb := synergy.ParamaterBuilder{}
+	pb.Add(&synergy.ReportPeriodParamater{Period: 0})
 
 	gradebook, err := client.GradeBook(&pb)
 	if err != nil {
 		fmt.Println("issue getting grade")
+		return
 	}
 
 	// Print the points gained on the fourth assignment in marking period 1 in course 1
