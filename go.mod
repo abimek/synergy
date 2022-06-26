@@ -1,4 +1,4 @@
-module github.com/abimekuriya/synergy
+module github.com/abimek/synergy
 
 go 1.18
 
